@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import { Button, FormControl, Input, InputLabel } from "@material-ui/core";
+import Messages from './Messages'
 
 function App() {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  console.log(input);
+  console.log(messages);
+  const sendMessages = (e) => {
+    e.preventDefault();
+    setMessages([...messages, input]);
+    setInput("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <h1>Hello Abdul Mutlib Butt</h1>
+
+      <FormControl>
+        <InputLabel color="primary" htmlFor="my-input">
+          type any message
+        </InputLabel>
+        <Input value={input} onChange={(e) => setInput(e.target.value)} />
+        <Button
+          disabled={!input}
+          variant="contained"
+          color="primary"
+          onClick={sendMessages}
         >
-          Learn React
-        </a>
-      </header>
+          Send Message
+        </Button>
+      </FormControl>
+
+      {messages.map((chat, index) => {
+        return(
+          <Messages text ={chat} />
+        )
+      })}
     </div>
   );
 }
